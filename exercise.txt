@@ -1,0 +1,34 @@
+El sistema actual de gestión de alarmas, históricos, eventos, errores, etc, tiene varias carencias que debemos solucionar en librerías futuras.
+
+Necesitamos una cola de almacenamiento y control de elementos en una memoria no volátil.
+Requisitos:
+– El sistema debe almacenar diferentes tipos de datos en la cola, para el ejemplo 3 tipos.
+Aceptara INSERTS de los diferentes tipos de elementos.
+– Si se realiza un GET de un tipo, el sistema debe devolver todos los elementos de ese tipo
+y clasificarlos con identificador de transacción.
+– Si se realiza un GET de un tipo y tenemos una transacción pendiente de ese tipo, el
+sistema devolverá los mismos elementos que se utilizaron para crear esa transacción.
+– Cuando el sistema reciba un END de un id de transacción eliminará los elementos de la
+transacción del sistema.
+– Utilizaremos eepromaddress() para obtener un puntero a la zona de memoria no volátil de la máquina. (En el ejercicio es memoria normal, pero la entenderemos como no volátil). Todos los datos que necesitemos que sean persistentes estarán en dicha memoria.
+– Los parámetros tipo, subtipo y size de los eventos siempre estarán en el rango [0-255]
+– El sistema tiene que ser capaz de mantener la persistencia entre rearranques, el proyecto
+ya guarda la “eeprom” en fichero.
+– Hay que intentar que el modulo sea lo mas óptimo posible tanto en utilización de
+memoria como en uso de cpu.
+
+El ejercicio consiste en diseñar todo el sistema de colas con almacenamiento en EEPROM.
+Proporcionamos un proyecto con los módulos necesarios y opciones de compilación en
+win32 para importarlo en Helios. Podréis utilizar el Debugger de watcom en Windows si lo
+necesitáis. En principio únicamente será necesario que modifiquéis el modulo cola.c/h.
+Hemos implementado un sistema de testeo del sistema.
+Las teclas 1, 2 y 3 insertan eventos del tipo 1.
+Las teclas 4, 5 y 6 insertan eventos del tipo 2.
+Las teclas 7, 8 y 9 insertan eventos del tipo 3.
+Las teclas Q, W y E, hace una petición de GET al sistema de colas de los tipos 1, 2 y 3
+respectivamente.
+Las teclas A, S, D, generan un END al sistema de colas de los tipos 1, 2 y 3 respectivamente.
+
+Estamos utilizando una memoria lenta.
+Es importante realizar las minimas lecturas/escrituras y utilizar el minimo espacio.
+
